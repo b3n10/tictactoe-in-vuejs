@@ -6,7 +6,7 @@
 			 :boxKey="index"
 			 :boxCls="b.boxClass"
 			 :txtCls="b.textClass"
-			 @userMove="userMove"
+			 @userMove="userMoveHandler"
 			 >
 		</Box>
 	</div>
@@ -14,6 +14,8 @@
 
 <script>
 import Box from './Box.vue'
+import Vue from 'vue'
+const v = new Vue()
 
 export default {
 	name: 'board',
@@ -41,10 +43,12 @@ export default {
 			}
 
 			if (this.checkWin()) console.log(`Game Over! ${this.checkWin()} wins!`)
-
 			else if (this.allFilled()) console.log('Draw')
+
+
+			if (this.checkWin() || this.allFilled()) this.$emit('reset')
 		},
-		userMove(k) {
+		userMoveHandler(k) {
 			if (!this.checkWin() && this.boxTexts[k].text === '') {
 				this.mark(k, this.usrMk)
 				this.boxTexts[k].boxClass = 'marked'
