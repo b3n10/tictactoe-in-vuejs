@@ -63,9 +63,19 @@ export default {
 			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
 			const diagonal_slots = [ [0, 4, 8], [2, 4, 6] ]
 
-			if (horizontal_slots.some(s => this.moveCondition(s))) { return }
-			else if (vertical_slots.some(s => this.moveCondition(s))) { return }
-			else if (diagonal_slots.some(s => this.moveCondition(s))) { return }
+			/* offense */
+			if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			else if (diagonal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+
+			/* defense */
+			else if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+
+			/* special move when middle slot is taken */
+			else if (this.boxTexts[4].text !== '' && this.boxTexts[8].text === '') { this.opponentMark(8) }
+
 			else {
 				do {
 					var k = parseInt((Math.random() * 8).toFixed())
@@ -74,28 +84,19 @@ export default {
 			}
 		},
 
-		moveCondition(s) {
+		moveCondition(s, m) {
 			const box = this.boxTexts
 			const [x, xx, xxx] = s
 
-			if ([x, xx].filter(i => box[i].text === this.usrMk).length === 2 && box[xxx].text === '') {
-				this.opponentMark(xxx)
-				return true
-			}
-			if ([x, xxx].filter(i => box[i].text === this.usrMk).length === 2 && box[xx].text === '') {
-				this.opponentMark(xx)
-				return true
-			}
-			if ([xx, xxx].filter(i => box[i].text === this.usrMk).length === 2 && box[x].text === '') {
-				this.opponentMark(x)
-				return true
-			}
-
+			if ([x, xx].filter(i => box[i].text === m).length === 2 && box[xxx].text === '') return this.opponentMark(xxx)
+			if ([x, xxx].filter(i => box[i].text === m).length === 2 && box[xx].text === '') return this.opponentMark(xx)
+			if ([xx, xxx].filter(i => box[i].text === m).length === 2 && box[x].text === '') return this.opponentMark(x)
 			return false
 		},
 
 		opponentMark(k) {
 			!this.checkWin() && setTimeout(() => this.mark(k , this.oppMk), 100)
+			return true
 		},
 
 		allFilled() {

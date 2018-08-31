@@ -19,6 +19,7 @@ export default {
 
 <style lang="scss">
 .box {
+	background-color: #c1c1c1;
 	width: 33.3%;
 	height: 33%;
 	display: inline-block;
@@ -39,8 +40,7 @@ export default {
 	}
 
 	&.marked {
-		color: black;
-		background-color: yellow;
+		color: #fff;
 	}
 
 	&__text {
