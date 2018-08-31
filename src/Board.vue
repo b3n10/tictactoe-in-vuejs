@@ -61,14 +61,17 @@ export default {
 		opponentMove() {
 			const horizontal_slots = [ [0, 1, 2], [3, 4, 5], [6, 7, 8] ]
 			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
+			const diagonal_slots = [ [0, 4, 8], [2, 4, 6] ]
 
-			if (!horizontal_slots.some(s => this.moveCondition(s))) {
+			if (horizontal_slots.some(s => this.moveCondition(s))) { return }
+			else if (vertical_slots.some(s => this.moveCondition(s))) { return }
+			else if (diagonal_slots.some(s => this.moveCondition(s))) { return }
+			else {
 				do {
 					var k = parseInt((Math.random() * 8).toFixed())
 				} while (!this.allFilled() && this.boxTexts[k].text !== '')
 				this.opponentMark(k)
 			}
-
 		},
 
 		moveCondition(s) {
@@ -131,14 +134,11 @@ export default {
 </script>
 
 <style lang="scss">
-$board_size: 500px;
-
 .board {
-	width: $board_size;
-	height: $board_size;
-	border-radius: 5px;
-	padding: 5px;
-	margin: 80px auto;
+	width: 350px;
+	height: 350px;
+	padding: 0;
+	margin: 100px auto 0 auto;
 	use-select: none;
 	-moz-user-select: none;
 }

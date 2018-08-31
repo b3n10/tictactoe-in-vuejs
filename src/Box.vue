@@ -19,16 +19,24 @@ export default {
 
 <style lang="scss">
 .box {
-	width: 32%;
-	height: 32%;
-	margin: 2px 3px;
-	padding: 0;
+	width: 33.3%;
+	height: 33%;
 	display: inline-block;
-	border: 1px dashed #000;
+	border-right: 5px solid #000;
+	border-bottom: 5px solid #000;
 	box-sizing: border-box;
 	text-align: center;
 	overflow: hidden;
 	cursor: pointer;
+	vertical-align: top;
+
+	&:nth-child(3n+3) {
+		border-right: none;
+	}
+
+	&:nth-last-child(-n+3) {
+		border-bottom: none;
+	}
 
 	&.marked {
 		color: black;
@@ -39,8 +47,9 @@ export default {
 		width: 100%;
 		height: 100%;
 		margin: 0;
+		padding: 0;
 		font-weight: 900;
-		font: 150px/1.03 serif;
+		font: 110px/1.01 serif;
 		overflow: hidden;
 		cursor: pointer;
 		opacity: 0;
