@@ -15,7 +15,6 @@
 <script>
 import Box from './Box.vue'
 import Vue from 'vue'
-const v = new Vue()
 
 export default {
 	name: 'board',
@@ -26,7 +25,7 @@ export default {
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
-			]
+			],
 		}
 	},
 	components: {
@@ -42,9 +41,8 @@ export default {
 				this.boxTexts[k].textClass = 'marked'
 			}
 
-			if (this.checkWin()) console.log(`Game Over! ${this.checkWin()} wins!`)
-			else if (this.allFilled()) console.log('Draw')
-
+			if (this.checkWin()) this.$emit('result', `Game Over! ${this.checkWin()} wins!`)
+			else if (this.allFilled()) this.$emit('result', 'Draw')
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
 		},
@@ -100,10 +98,9 @@ $board_size: 500px;
 .board {
 	width: $board_size;
 	height: $board_size;
-	border: 5px solid #000;
 	border-radius: 5px;
 	padding: 5px;
-	margin: 50px auto;
+	margin: 80px auto;
 	use-select: none;
 	-moz-user-select: none;
 }

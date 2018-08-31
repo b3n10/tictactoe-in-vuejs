@@ -24,7 +24,7 @@ export default {
 	margin: 2px 3px;
 	padding: 0;
 	display: inline-block;
-	border: 2px solid #ccc;
+	border: 1px dashed #000;
 	box-sizing: border-box;
 	text-align: center;
 	overflow: hidden;

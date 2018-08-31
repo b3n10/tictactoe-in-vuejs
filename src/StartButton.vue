@@ -10,7 +10,11 @@
 
 <style lang="scss">
 .btn {
-	margin: 50px auto;
+	margin: 0 auto;
 	width: 166px;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 6%;
 }
 </style>
