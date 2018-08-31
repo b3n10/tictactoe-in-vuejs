@@ -18,7 +18,9 @@ import Vue from 'vue'
 
 export default {
 	name: 'board',
+
 	props: ['oppFt', 'usrMk', 'oppMk'],
+
 	data() {
 		return {
 			boxTexts: [
@@ -28,12 +30,13 @@ export default {
 			],
 		}
 	},
-	components: {
-		Box
-	},
+
+	components: { Box },
+
 	mounted() {
 		if (this.oppFt) this.opponentMove()
 	},
+
 	methods: {
 		mark(k, l) {
 			if (!this.checkWin() && this.boxTexts[k].text === '') {
@@ -46,6 +49,7 @@ export default {
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
 		},
+
 		userMoveHandler(k) {
 			if (!this.checkWin() && this.boxTexts[k].text === '') {
 				this.mark(k, this.usrMk)
@@ -53,20 +57,54 @@ export default {
 				this.opponentMove()
 			}
 		},
+
 		opponentMove() {
-			do {
-				var k = parseInt((Math.random() * 8).toFixed())
-			} while (!this.allFilled() && this.boxTexts[k].text !== '')
-			!this.checkWin() && setTimeout(() => this.mark(k , this.oppMk), 180)
+			const horizontal_slots = [ [0, 1, 2], [3, 4, 5], [6, 7, 8] ]
+			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
+
+			if (!horizontal_slots.some(s => this.moveCondition(s))) {
+				do {
+					var k = parseInt((Math.random() * 8).toFixed())
+				} while (!this.allFilled() && this.boxTexts[k].text !== '')
+				this.opponentMark(k)
+			}
+
 		},
+
+		moveCondition(s) {
+			const box = this.boxTexts
+			const [x, xx, xxx] = s
+
+			if ([x, xx].filter(i => box[i].text === this.usrMk).length === 2 && box[xxx].text === '') {
+				this.opponentMark(xxx)
+				return true
+			}
+			if ([x, xxx].filter(i => box[i].text === this.usrMk).length === 2 && box[xx].text === '') {
+				this.opponentMark(xx)
+				return true
+			}
+			if ([xx, xxx].filter(i => box[i].text === this.usrMk).length === 2 && box[x].text === '') {
+				this.opponentMark(x)
+				return true
+			}
+
+			return false
+		},
+
+		opponentMark(k) {
+			!this.checkWin() && setTimeout(() => this.mark(k , this.oppMk), 100)
+		},
+
 		allFilled() {
 			let filledCount = 0
 			this.boxTexts.forEach(b => b.text !== '' && (filledCount++))
 			return filledCount === 9
 		},
+
 		checkWin() {
 			return ['X', 'O'].map(l => this.patterns(l)).filter(item => item)[0];
 		},
+
 		patterns(l) {
 			const box = this.boxTexts
 

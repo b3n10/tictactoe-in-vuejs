@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<StartButton v-if="showButton"
-							 @start="startHandler"
-							 >
+							 @start="startHandler">
 		</StartButton>
 
 		<Results :rlt="result">
@@ -28,6 +27,7 @@ document.title = 'tic tac toe'
 
 export default {
 	name: 'app',
+
 	data() {
 		return {
 			play_game: false,
@@ -38,12 +38,16 @@ export default {
 			result: null
 		}
 	},
+
 	components: { StartButton, Results, Board},
+
 	methods: {
 		startHandler(bool) {
 			this.opponentFirst = bool
 			this.play_game = false
 			this.result = ''
+			document.title = 'tic tac toe'
+
 			setTimeout(() => {
 				this.play_game = true
 				this.userMark = (this.opponentFirst) ? 'O' : 'X'
@@ -51,11 +55,14 @@ export default {
 				this.showButton = false
 			}, 0)
 		},
+
 		resetHandler() {
 			this.showButton = true
 		},
+
 		resultHandler(r) {
 			this.result = r
+			document.title = 'tic tac toe - ' + r
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <template>
 	<div class="btn">
 		<button class="btn__x" @click="$emit('start', false)">Play as X</button>
-		<button class="btn__O" @click="$emit('start', true)">Play as O</button>
+		<button class="btn__o" @click="$emit('start', true)">Play as O</button>
 	</div>
 </template>
 
