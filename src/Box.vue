@@ -4,12 +4,12 @@
 			@click="$emit('userMove', boxKey)"
 			>
 
-			<p class="box__text"
-			:class="txtCls"
-			>
-			<span class="box__text-x1"></span>
-			<span class="box__text-x2"></span>
-			{{ text }}
+			<p v-if="text === 'X'" class="box__text" :class="txtCls">
+				<span class="box__text-x1" :class="txtCls"></span>
+				<span class="box__text-x2" :class="txtCls"></span>
+			</p>
+			<p v-else class="box__text" :class="txtCls">
+				{{ text }}
 			</p>
 	</div>
 </template>
@@ -44,7 +44,7 @@ export default {
 	}
 
 	&.marked {
-		color: #fff;
+		color: #000;
 	}
 
 	&__text {
@@ -57,11 +57,12 @@ export default {
 		font: 110px/1.01 serif;
 		overflow: hidden;
 		cursor: pointer;
-		opacity: 1;
-		transition: opacity 1s;
 
-		&.marked {
-			opacity: 1;
+		&-x1 {
+			transform: rotate(45deg);
+		}
+		&-x2 {
+			transform: rotate(135deg);
 		}
 
 		&-x1, &-x2 {
@@ -70,16 +71,14 @@ export default {
 			left: 45%;
 			width: 10px;
 			height: 80%;
+			opacity: 0;
 			background-color: #565454;
 			border-radius: 5px;
-			transition: height 1s;
+			transition: opacity 2s;
 		}
 
-		&-x1 {
-			transform: rotate(45deg);
-		}
-		&-x2 {
-			transform: rotate(135deg);
+		&.marked &-x1 {
+			opacity: 1;
 		}
 	}
 }

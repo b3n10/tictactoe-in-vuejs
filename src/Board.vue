@@ -63,18 +63,17 @@ export default {
 			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
 			const diagonal_slots = [ [0, 4, 8], [2, 4, 6] ]
 
-			/* offense */
-			if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
-			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+			else if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+
+			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 			else if (diagonal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
 
-			/* defense */
-			else if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
-			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
 
 			/* special move when middle slot is taken */
-			else if (this.boxTexts[4].text !== '' && this.boxTexts[8].text === '') { this.opponentMark(8) }
+			// else if (this.boxTexts[4].text !== '' && this.boxTexts[8].text === '') { this.opponentMark(8) }
 
 			else {
 				do {
@@ -86,17 +85,35 @@ export default {
 
 		moveCondition(s, m) {
 			const box = this.boxTexts
-			const [x, xx, xxx] = s
 
+			let countM = 0, k = null
+
+			s.forEach(s => {
+				if (box[s].text === m) countM++
+				else if (box[s].text === '') k = s
+			})
+
+			if (countM === 2 && k !== null) return this.opponentMark(k)
+
+			/*
+			const k = s.filter(i => box[i].text !== m && box[i].text === '')
+			if (k.length === 1) return this.opponentMark(k[0])
+			*/
+
+			/*
+			const [x, xx, xxx] = s
 			if ([x, xx].filter(i => box[i].text === m).length === 2 && box[xxx].text === '') return this.opponentMark(xxx)
 			if ([x, xxx].filter(i => box[i].text === m).length === 2 && box[xx].text === '') return this.opponentMark(xx)
 			if ([xx, xxx].filter(i => box[i].text === m).length === 2 && box[x].text === '') return this.opponentMark(x)
-			return false
+			*/
 		},
 
 		opponentMark(k) {
-			!this.checkWin() && setTimeout(() => this.mark(k , this.oppMk), 100)
-			return true
+			const box = this.boxTexts
+			if (box[k].text === '' && !this.checkWin()) {
+				setTimeout(() => this.mark(k , this.oppMk), 100)
+				return true
+			}
 		},
 
 		allFilled() {
