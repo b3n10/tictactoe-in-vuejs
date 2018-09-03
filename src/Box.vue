@@ -4,13 +4,15 @@
 			@click="$emit('userMove', boxKey)"
 			>
 
-			<p v-if="text === 'X'" class="box__text" :class="txtCls">
-				<span class="box__text-x1" :class="txtCls"></span>
-				<span class="box__text-x2" :class="txtCls"></span>
-			</p>
-			<p v-else class="box__text" :class="txtCls">
-				{{ text }}
-			</p>
+			<transition name="fade">
+				<p v-if="text === 'X'" class="box__text" :class="txtCls">
+					<span class="box__text-x1"></span>
+					<span class="box__text-x2"></span>
+				</p>
+				<p v-if="text === 'O'" class="box__text" :class="txtCls">
+					{{ text }}
+				</p>
+			</transition>
 	</div>
 </template>
 
@@ -69,17 +71,33 @@ export default {
 			position: absolute;
 			top: 12%;
 			left: 45%;
-			width: 10px;
+			width: 0px;
 			height: 80%;
-			opacity: 0;
 			background-color: #565454;
 			border-radius: 5px;
-			transition: opacity 2s;
+			transition: width 1s;
 		}
 
-		&.marked &-x1 {
-			opacity: 1;
+		&.marked &-x1,
+		&.marked &-x2 {
+			width: 10px;
 		}
+	}
+}
+
+.fade-enter-active, .fade-leave-active {
+	animation: bounce-in .5s;
+}
+
+@keyframes bounce-in {
+	0% {
+		transform: scale(0);
+	}
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		transform: scale(1);
 	}
 }
 </style>
