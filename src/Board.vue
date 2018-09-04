@@ -159,5 +159,12 @@ export default {
 	margin: 100px auto 0 auto;
 	use-select: none;
 	-moz-user-select: none;
+
+	@media (min-width: 500px) {
+		& {
+			width: 500px;
+			height: 500px;
+		}
+	}
 }
 </style>

@@ -78,13 +78,4 @@ body, html {
 	margin: 0;
 }
 
-@media (min-width: 500px) {
-	.board {
-		width: 500px;
-		height: 500px;
-	}
-	.box__text {
-		font: 150px/1.03 serif;
-	}
-}
 </style>
