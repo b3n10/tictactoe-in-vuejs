@@ -27,12 +27,12 @@ export default {
 
 <style lang="scss">
 .box {
-	background-color: #fff;
+	background-color: #000;
 	width: 33%;
 	height: 33%;
 	display: inline-block;
-	border-right: 5px solid #565454;
-	border-bottom: 5px solid #565454;
+	border-right: 5px solid yellow;
+	border-bottom: 5px solid yellow;
 	border-radius: 5px;
 	box-sizing: border-box;
 	text-align: center;
@@ -69,7 +69,7 @@ export default {
 			left: 45%;
 			width: 10px;
 			height: 80%;
-			background-color: #565454;
+			background-color: #f1f1f1;
 			border-radius: 5px;
 
 			@media (min-width: 500px) {
@@ -92,7 +92,7 @@ export default {
 			left: $o1_position;
 			width: $o1_size;
 			height: $o1_size;
-			background-color: #565454;
+			background-color: #f1f1f1;
 			border-radius: 50%;
 
 			@media (min-width: 500px) {
@@ -112,7 +112,7 @@ export default {
 			left: $o2_position;
 			width: $o2_size;
 			height: $o2_size;
-			background-color: #f1f1f1;
+			background-color: #000;
 			border-radius: 50%;
 		}
 
