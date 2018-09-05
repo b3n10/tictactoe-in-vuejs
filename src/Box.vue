@@ -10,9 +10,12 @@
 					<span class="box__text-x2"></span>
 				</p>
 				<p v-if="text === 'O'" class="box__text" :class="txtCls">
-					{{ text }}
+					<span class="box__text-o1">
+						<span class="box__text-o2"></span>
+					</span>
 				</p>
 			</transition>
+
 	</div>
 </template>
 
@@ -24,12 +27,12 @@ export default {
 
 <style lang="scss">
 .box {
-	background-color: #f1f1f1;
+	background-color: #fff;
 	width: 33%;
 	height: 33%;
 	display: inline-block;
-	border-right: 5px solid #000;
-	border-bottom: 5px solid #000;
+	border-right: 5px solid #565454;
+	border-bottom: 5px solid #565454;
 	border-radius: 5px;
 	box-sizing: border-box;
 	text-align: center;
@@ -45,19 +48,12 @@ export default {
 		border-bottom: none;
 	}
 
-	&.marked {
-		color: #000;
-	}
-
 	&__text {
 		position: relative;
 		width: 100%;
 		height: 100%;
 		margin: 0;
 		padding: 0;
-		font-weight: 900;
-		font: 110px/1.01 serif;
-		overflow: hidden;
 		cursor: pointer;
 
 		&-x1 {
@@ -75,7 +71,6 @@ export default {
 			height: 80%;
 			background-color: #565454;
 			border-radius: 5px;
-			// transition: width .5s;
 
 			@media (min-width: 500px) {
 				& {
@@ -84,6 +79,41 @@ export default {
 					height: 86%;
 				}
 			}
+		}
+
+		&-o1, &-o2 {
+			position: absolute;
+		}
+
+		$o1_position: 15%;
+		$o1_size: 72%;
+		&-o1 {
+			top: $o1_position;
+			left: $o1_position;
+			width: $o1_size;
+			height: $o1_size;
+			background-color: #565454;
+			border-radius: 50%;
+
+			@media (min-width: 500px) {
+				& {
+					top: 9%;
+					left: 9%;
+					width: 83%;
+					height: 83%;
+				}
+			}
+		}
+
+		$o2_position: 11%;
+		$o2_size: 78.5%;
+		&-o2 {
+			top: $o2_position;
+			left: $o2_position;
+			width: $o2_size;
+			height: $o2_size;
+			background-color: #f1f1f1;
+			border-radius: 50%;
 		}
 
 	}

@@ -63,14 +63,14 @@ export default {
 			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
 			const diagonal_slots = [ [0, 4, 8], [2, 4, 6] ]
 
-			if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
-			else if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			else if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 
-			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 			else if (diagonal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 
-			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
+			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
 
 			/* special move when middle slot is taken */
 			// else if (this.boxTexts[4].text !== '' && this.boxTexts[8].text === '') { this.opponentMark(8) }
