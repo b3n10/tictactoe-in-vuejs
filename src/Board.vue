@@ -1,20 +1,24 @@
 <template>
-	<div class="board">
-		<Box v-for="(b, index) of boxTexts"
-			 :text="b.text"
-			 :key="index"
-			 :boxKey="index"
-			 :boxCls="b.boxClass"
-			 :txtCls="b.textClass"
-			 @userMove="userMoveHandler"
-			 >
-		</Box>
+	<div class="main">
+		<div class="board">
+			<Box v-for="(b, index) of boxTexts"
+				:text="b.text"
+				:key="index"
+				:boxKey="index"
+				:boxCls="b.boxClass"
+				:txtCls="b.textClass"
+				@userMove="userMoveHandler"
+				>
+			</Box>
+		</div>
+
+		<MarkLine></MarkLine>
 	</div>
 </template>
 
 <script>
 import Box from './Box.vue'
-import Vue from 'vue'
+import MarkLine from './MarkLine.vue'
 
 export default {
 	name: 'board',
@@ -31,7 +35,7 @@ export default {
 		}
 	},
 
-	components: { Box },
+	components: { Box, MarkLine },
 
 	mounted() {
 		if (this.oppFt) this.opponentMove()
@@ -117,9 +121,7 @@ export default {
 		},
 
 		allFilled() {
-			let filledCount = 0
-			this.boxTexts.forEach(b => b.text !== '' && (filledCount++))
-			return filledCount === 9
+			return this.boxTexts.filter(b => b.text !== '').length === 9
 		},
 
 		checkWin() {
@@ -152,13 +154,12 @@ export default {
 </script>
 
 <style lang="scss">
-.board {
+.main {
+	position: relative;
 	width: 350px;
 	height: 350px;
 	padding: 0;
 	margin: 100px auto 0 auto;
-	use-select: none;
-	-moz-user-select: none;
 
 	@media (min-width: 500px) {
 		& {
@@ -166,5 +167,12 @@ export default {
 			height: 500px;
 		}
 	}
+}
+
+.board {
+	width: 100%;
+	height: 100%;
+	use-select: none;
+	-moz-user-select: none;
 }
 </style>

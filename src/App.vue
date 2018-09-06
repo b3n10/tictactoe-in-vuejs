@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="app">
 		<StartButton v-if="showButton"
 							 @start="startHandler">
 		</StartButton>
@@ -39,7 +39,7 @@ export default {
 		}
 	},
 
-	components: { StartButton, Results, Board},
+	components: { StartButton, Results, Board },
 
 	methods: {
 		startHandler(bool) {
@@ -76,7 +76,11 @@ export default {
 body, html {
 	padding: 0;
 	margin: 0;
-	background-color: #f1f1f1;
+	background-color: #1f384d;
+}
+
+.app {
+	position: relative;
 }
 
 </style>
