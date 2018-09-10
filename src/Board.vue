@@ -12,7 +12,7 @@
 			</Box>
 		</div>
 
-		<MarkLine></MarkLine>
+		<MarkLine :mrk="marked"></MarkLine>
 	</div>
 </template>
 
@@ -27,11 +27,12 @@ export default {
 
 	data() {
 		return {
+			marked: false,
 			boxTexts: [
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
-			],
+			]
 		}
 	},
 
@@ -48,8 +49,13 @@ export default {
 				this.boxTexts[k].textClass = 'marked'
 			}
 
-			if (this.checkWin()) this.$emit('result', `Game Over! ${this.checkWin()} wins!`)
-			else if (this.allFilled()) this.$emit('result', 'Draw')
+			if (this.checkWin()) {
+				this.$emit('result', `Game Over! ${this.checkWin()} wins!`)
+				this.marked = true
+			} else if (this.allFilled()) {
+				this.$emit('result', 'Draw')
+				this.marked = true
+			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
 		},
@@ -75,9 +81,6 @@ export default {
 
 			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
 			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
-
-			/* special move when middle slot is taken */
-			// else if (this.boxTexts[4].text !== '' && this.boxTexts[8].text === '') { this.opponentMark(8) }
 
 			else {
 				do {
@@ -113,8 +116,7 @@ export default {
 		},
 
 		opponentMark(k) {
-			const box = this.boxTexts
-			if (box[k].text === '' && !this.checkWin()) {
+			if (this.boxTexts[k].text === '' && !this.checkWin()) {
 				setTimeout(() => this.mark(k , this.oppMk), 100)
 				return true
 			}

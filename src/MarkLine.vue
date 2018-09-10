@@ -1,11 +1,16 @@
 <template>
-	<div class="markline"
+	<transition name="mark_slide">
+	<div v-if="mrk"
+		class="markline"
 		:class="this.block + markclass">
 	</div>
+	</transition>
 </template>
 
 <script>
 export default {
+	props: [ 'mrk' ],
+
 	data() {
 		return {
 			block: 'markline',
@@ -28,7 +33,7 @@ export default {
 	$horizontal_height_lg: 20px;
 
 	&__horizontal-1 {
-		background: #c1c1c1;
+		background: #c19649;
 		top: 14.5%;
 		left: 0;
 		width: $horizontal_width;
@@ -60,5 +65,15 @@ export default {
 			}
 		}
 	}
+}
+
+.mark_slide-enter-active,
+.mark_slide-leave-active {
+	animation: .5s slidein;
+}
+
+@keyframes slidein {
+	from { transform: scaleX(0); }
+	to { transform: scaleX(1); }
 }
 </style>
