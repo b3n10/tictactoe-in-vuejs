@@ -2,19 +2,18 @@
 	<transition name="mark_slide">
 	<div v-if="mrk"
 		class="markline"
-		:class="this.block + markclass">
+		:class="this.block + '__' + this.mrkCls">
 	</div>
 	</transition>
 </template>
 
 <script>
 export default {
-	props: [ 'mrk' ],
+	props: [ 'mrk', 'mrkCls' ],
 
 	data() {
 		return {
-			block: 'markline',
-			markclass: '__horizontal-1'
+			block: 'markline'
 		}
 	}
 }
@@ -23,7 +22,7 @@ export default {
 <style lang="scss">
 .markline {
 	position: absolute;
-	background: #c1c1c1;
+	background: #c19649;
 	border-radius: 5px;
 	overflow: hidden;
 
@@ -32,8 +31,7 @@ export default {
 	$horizontal_height: 10px;
 	$horizontal_height_lg: 20px;
 
-	&__horizontal-1 {
-		background: #c19649;
+	&__hrt {
 		top: 14.5%;
 		left: 0;
 		width: $horizontal_width;
@@ -49,8 +47,7 @@ export default {
 		}
 	}
 
-	&__horizontal-2 {
-		background: #c1c1c1;
+	&__hrm {
 		top: 47.9%;
 		left: 0;
 		width: $horizontal_width;

@@ -12,7 +12,10 @@
 			</Box>
 		</div>
 
-		<MarkLine :mrk="marked"></MarkLine>
+		<MarkLine
+				:mrk="marked"
+				:mrkCls="markclass">
+		</MarkLine>
 	</div>
 </template>
 
@@ -32,7 +35,9 @@ export default {
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
 				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
-			]
+			],
+			markclass: '',
+			letterWin: ''
 		}
 	},
 
@@ -50,14 +55,18 @@ export default {
 			}
 
 			if (this.checkWin()) {
-				this.$emit('result', `Game Over! ${this.checkWin()} wins!`)
+				this.$emit('result', `Game Over! ${this.letterWin} wins!`)
 				this.marked = true
+				/* start debugging */
+				console.log('Winner:', this.markclass, this.letterWin)
+				/* end debugging */
 			} else if (this.allFilled()) {
 				this.$emit('result', 'Draw')
 				this.marked = true
 			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
+
 		},
 
 		userMoveHandler(k) {
@@ -127,29 +136,78 @@ export default {
 		},
 
 		checkWin() {
-			return ['X', 'O'].map(l => this.patterns(l)).filter(item => item)[0];
+			return ['X', 'O'].map(letter => this.patterns(letter)).includes(true)
 		},
 
-		patterns(l) {
-			const box = this.boxTexts
+		patterns(letter) {
+			/*
+			hrt: horizontal top
+			hrm: horizontal middle
+			hrb: horizontal bottom
+			 */
+			return [
+				[0, 1, 2, 'hrt'],
+				[3, 4, 5, 'hrm'],
+				[6, 7, 8, 'hrb'],
 
+				[0, 3, 6, 'vrl'],
+				[1, 4, 7, 'vrm'],
+				[2, 5, 8, 'vrr'],
+
+				[0, 4, 8, 'dgl'],
+				[6, 4, 2, 'dgr'],
+			].some( array => this.getPattern(array, letter) )
+
+			/*
+			const vertical = [
+				[0, 3, 6, 'vrl'],
+				[1, 4, 7, 'vrm'],
+				[2, 5, 8, 'vrr']
+			].some( array => this.getPattern(array, letter) )
+
+			const diagonal = [
+				[0, 4, 8, 'dl'],
+				[6, 4, 2, 'dr'],
+			].some( array => this.getPattern(array, letter) )
+
+			if (horizontal) {
+				console.log(horizontal, 'h')
+				return horizontal
+			}
+			if (vertical) {
+				console.log(vertical, 'v')
+				return vertical
+			}
+			if (diagonal) {
+				console.log(diagonal, 'd')
+				return diagonal
+			}
+			*/
+			/*
+			if (horizontal) return horizontal
+			if (vertical) return vertical
+			if (diagonal) return diagonal
+			*/
+
+			/*
 			if (
-				/* horizontal pattern */
-				([0, 1, 2].filter(i => box[i].text === l).length === 3) ||
-				([3, 4, 5].filter(i => box[i].text === l).length === 3) ||
-				([6, 7, 8].filter(i => box[i].text === l).length === 3) ||
+				([0, 1, 2].filter(i => box[i].text === letter).length === 3) ||
+				([3, 4, 5].filter(i => box[i].text === letter).length === 3) ||
+				([6, 7, 8].filter(i => box[i].text === letter).length === 3) ||
 
-				/* vertical pattern */
-				([0, 3, 6].filter(i => box[i].text === l).length === 3) ||
-				([1, 4, 7].filter(i => box[i].text === l).length === 3) ||
-				([2, 5, 8].filter(i => box[i].text === l).length === 3) ||
+				([0, 3, 6].filter(i => box[i].text === letter).length === 3) ||
+				([1, 4, 7].filter(i => box[i].text === letter).length === 3) ||
+				([2, 5, 8].filter(i => box[i].text === letter).length === 3) ||
 
-				/* diagonal pattern */
-				([0, 4, 8].filter(i => box[i].text === l).length === 3) ||
-				([6, 4, 2].filter(i => box[i].text === l).length === 3)
+				([0, 4, 8].filter(i => box[i].text === letter).length === 3) ||
+				([6, 4, 2].filter(i => box[i].text === letter).length === 3)
 			) return l
+			*/
+		},
 
-			return false
+		getPattern(array, letter) {
+			const [ x, xx, xxx, mark ] = array
+			if ([x, xx, xxx].filter(i => this.boxTexts[i].text === letter).length === 3) return (this.markclass = mark) && (this.letterWin = letter)
 		}
 	}
 }
