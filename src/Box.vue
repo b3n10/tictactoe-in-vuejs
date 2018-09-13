@@ -1,15 +1,14 @@
 <template>
 	<div class="box"
-			:class="boxCls"
 			@click="$emit('userMove', boxKey)"
 			>
 
 			<transition name="fade">
-				<p v-if="text === 'X'" class="box__text" :class="txtCls">
+				<p v-if="text === 'X'" class="box__text">
 					<span class="box__text-x1"></span>
 					<span class="box__text-x2"></span>
 				</p>
-				<p v-if="text === 'O'" class="box__text" :class="txtCls">
+				<p v-if="text === 'O'" class="box__text">
 					<span class="box__text-o1">
 						<span class="box__text-o2"></span>
 					</span>

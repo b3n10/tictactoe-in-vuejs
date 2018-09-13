@@ -1,12 +1,10 @@
 <template>
 	<div class="main">
 		<div class="board">
-			<Box v-for="(b, index) of boxTexts"
-				:text="b.text"
+			<Box v-for="(box, index) in boxes"
+				:text="box.text"
 				:key="index"
 				:boxKey="index"
-				:boxCls="b.boxClass"
-				:txtCls="b.textClass"
 				@userMove="userMoveHandler"
 				>
 			</Box>
@@ -14,7 +12,7 @@
 
 		<MarkLine
 				:mrk="marked"
-				:mrkCls="markclass">
+				:mrkCls="markClass">
 		</MarkLine>
 	</div>
 </template>
@@ -31,12 +29,12 @@ export default {
 	data() {
 		return {
 			marked: false,
-			boxTexts: [
-				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
-				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
-				{text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''}, {text: '', boxClass: '', textClass: ''},
+			boxes: [
+				{ text: '' }, { text: '' }, { text: '' },
+				{ text: '' }, { text: '' }, { text: '' },
+				{ text: '' }, { text: '' }, { text: '' },
 			],
-			markclass: '',
+			markClass: '',
 			letterWin: ''
 		}
 	},
@@ -48,17 +46,16 @@ export default {
 	},
 
 	methods: {
-		mark(k, l) {
-			if (!this.checkWin() && this.boxTexts[k].text === '') {
-				this.boxTexts[k].text = l
-				this.boxTexts[k].textClass = 'marked'
+		mark(index, letter) {
+			if (!this.checkWin() && this.boxes[index].text === '') {
+				this.boxes[index].text = letter
 			}
 
 			if (this.checkWin()) {
 				this.$emit('result', `Game Over! ${this.letterWin} wins!`)
 				this.marked = true
 				/* start debugging */
-				console.log('Winner:', this.markclass, this.letterWin)
+				console.log('Winner:', this.markClass, this.letterWin)
 				/* end debugging */
 			} else if (this.allFilled()) {
 				this.$emit('result', 'Draw')
@@ -69,70 +66,56 @@ export default {
 
 		},
 
-		userMoveHandler(k) {
-			if (!this.checkWin() && this.boxTexts[k].text === '') {
-				this.mark(k, this.usrMk)
-				this.boxTexts[k].boxClass = 'marked'
+		userMoveHandler(index) {
+			if (!this.checkWin() && this.boxes[index].text === '') {
+				this.mark(index, this.usrMk)
 				this.opponentMove()
 			}
 		},
 
 		opponentMove() {
-			const horizontal_slots = [ [0, 1, 2], [3, 4, 5], [6, 7, 8] ]
-			const vertical_slots = [ [0, 3, 6], [1, 4, 7], [2, 5, 8] ]
-			const diagonal_slots = [ [0, 4, 8], [2, 4, 6] ]
+			const slots = [
+				/* horizontal */
+				[0, 1, 2], [3, 4, 5], [6, 7, 8],
+				/* vertical */
+				[0, 3, 6], [1, 4, 7], [2, 5, 8],
+				/* diagonal */
+				[0, 4, 8], [2, 4, 6]
+			]
 
-			if (horizontal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
-			else if (horizontal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
+			/* offense */
+			if ( slots.some(slot => this.moveCondition(slot, this.oppMk)) ) return
+			/* defense */
+			if ( slots.some(slot => this.moveCondition(slot, this.usrMk)) ) return
 
-			else if (diagonal_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
-			else if (diagonal_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
-
-			else if (vertical_slots.some(s => this.moveCondition(s, this.oppMk))) { return }
-			else if (vertical_slots.some(s => this.moveCondition(s, this.usrMk))) { return }
-
-			else {
-				do {
-					var k = parseInt((Math.random() * 8).toFixed())
-				} while (!this.allFilled() && this.boxTexts[k].text !== '')
-				this.opponentMark(k)
-			}
+			/* random move */
+			do {
+				var index = parseInt((Math.random() * 8).toFixed())
+			} while (!this.allFilled() && this.boxes[index].text !== '')
+			this.opponentMark(index)
 		},
 
-		moveCondition(s, m) {
-			const box = this.boxTexts
+		moveCondition(slots, mark) {
+			const box = this.boxes
+			let mark_count = 0, boxIndex = null
 
-			let countM = 0, k = null
-
-			s.forEach(s => {
-				if (box[s].text === m) countM++
-				else if (box[s].text === '') k = s
+			slots.forEach(slot => {
+				if (box[slot].text === mark) mark_count++
+				else if (box[slot].text === '') boxIndex = slot
 			})
 
-			if (countM === 2 && k !== null) return this.opponentMark(k)
-
-			/*
-			const k = s.filter(i => box[i].text !== m && box[i].text === '')
-			if (k.length === 1) return this.opponentMark(k[0])
-			*/
-
-			/*
-			const [x, xx, xxx] = s
-			if ([x, xx].filter(i => box[i].text === m).length === 2 && box[xxx].text === '') return this.opponentMark(xxx)
-			if ([x, xxx].filter(i => box[i].text === m).length === 2 && box[xx].text === '') return this.opponentMark(xx)
-			if ([xx, xxx].filter(i => box[i].text === m).length === 2 && box[x].text === '') return this.opponentMark(x)
-			*/
+			if (mark_count === 2 && boxIndex !== null) return this.opponentMark(boxIndex)
 		},
 
-		opponentMark(k) {
-			if (this.boxTexts[k].text === '' && !this.checkWin()) {
-				setTimeout(() => this.mark(k , this.oppMk), 100)
+		opponentMark(boxIndex) {
+			if (this.boxes[boxIndex].text === '' && !this.checkWin()) {
+				setTimeout(() => this.mark(boxIndex , this.oppMk), 100)
 				return true
 			}
 		},
 
 		allFilled() {
-			return this.boxTexts.filter(b => b.text !== '').length === 9
+			return this.boxes.filter(b => b.text !== '').length === 9
 		},
 
 		checkWin() {
@@ -156,58 +139,12 @@ export default {
 
 				[0, 4, 8, 'dgl'],
 				[6, 4, 2, 'dgr'],
-			].some( array => this.getPattern(array, letter) )
-
-			/*
-			const vertical = [
-				[0, 3, 6, 'vrl'],
-				[1, 4, 7, 'vrm'],
-				[2, 5, 8, 'vrr']
-			].some( array => this.getPattern(array, letter) )
-
-			const diagonal = [
-				[0, 4, 8, 'dl'],
-				[6, 4, 2, 'dr'],
-			].some( array => this.getPattern(array, letter) )
-
-			if (horizontal) {
-				console.log(horizontal, 'h')
-				return horizontal
-			}
-			if (vertical) {
-				console.log(vertical, 'v')
-				return vertical
-			}
-			if (diagonal) {
-				console.log(diagonal, 'd')
-				return diagonal
-			}
-			*/
-			/*
-			if (horizontal) return horizontal
-			if (vertical) return vertical
-			if (diagonal) return diagonal
-			*/
-
-			/*
-			if (
-				([0, 1, 2].filter(i => box[i].text === letter).length === 3) ||
-				([3, 4, 5].filter(i => box[i].text === letter).length === 3) ||
-				([6, 7, 8].filter(i => box[i].text === letter).length === 3) ||
-
-				([0, 3, 6].filter(i => box[i].text === letter).length === 3) ||
-				([1, 4, 7].filter(i => box[i].text === letter).length === 3) ||
-				([2, 5, 8].filter(i => box[i].text === letter).length === 3) ||
-
-				([0, 4, 8].filter(i => box[i].text === letter).length === 3) ||
-				([6, 4, 2].filter(i => box[i].text === letter).length === 3)
-			) return l
-			*/
+			].some( slot => this.getPattern(slot, letter) )
 		},
 
-		getPattern(array, letter) {
-			const [ x, xx, xxx, mark ] = array
-			if ([x, xx, xxx].filter(i => this.boxTexts[i].text === letter).length === 3) return (this.markclass = mark) && (this.letterWin = letter)
+		getPattern(slot, letter) {
+			const [ x, xx, xxx, mark ] = slot
+			if ([x, xx, xxx].filter(i => this.boxes[i].text === letter).length === 3) return (this.markClass = mark) && (this.letterWin = letter)
 		}
 	}
 }
