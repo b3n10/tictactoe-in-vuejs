@@ -157,6 +157,7 @@ export default {
 	height: 350px;
 	padding: 0;
 	margin: 100px auto 0 auto;
+	overflow: hidden;
 
 	@media (min-width: 500px) {
 		& {
