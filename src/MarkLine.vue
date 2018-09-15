@@ -24,9 +24,8 @@ $line_color: #ad6d00;
 
 .markline {
 	position: relative;
-	top: -112%;
-	left: 47%;
 	background: $line_color;
+	border-radius: 10px;
 
 	/* horizontal */
 	&__hrt {
@@ -35,8 +34,6 @@ $line_color: #ad6d00;
 		left: 0;
 		width: 345px;
 		height: 10px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	&__hrm {
@@ -45,8 +42,6 @@ $line_color: #ad6d00;
 		left: 0;
 		width: 345px;
 		height: 10px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	&__hrb {
@@ -55,8 +50,6 @@ $line_color: #ad6d00;
 		left: 0;
 		width: 345px;
 		height: 10px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	/* vertical */
@@ -66,8 +59,6 @@ $line_color: #ad6d00;
 		left: 14.5%;
 		width: 10px;
 		height: 345px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	&__vrm {
@@ -76,51 +67,85 @@ $line_color: #ad6d00;
 		left: 47.5%;
 		width: 10px;
 		height: 345px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	&__vrr {
 		position: absolute;
 		top: 0.4%;
-		left: 81.5%;
+		left: 81.0%;
 		width: 10px;
 		height: 345px;
-		border-radius: 5px;
-		overflow: hidden;
 	}
 
 	/* diagonal */
 	&__dgl {
+		top: -111%;
+		left: 48%;
 		width: 10px;
 		height: 430px;
 		background: transparent;
 
 		&::before {
 			content:"";
-			border-radius: 5px;
 			background: $line_color;
 			position: absolute;
 			transform: rotate(135deg);
 			width: 10px;
 			height: 430px;
+			border-radius: 10px;
 		}
 	}
 
 	&__dgr {
+		top: -111%;
+		left: 46.8%;
 		width: 10px;
 		height: 430px;
 		background: transparent;
 
-		&::after {
+		&::before {
 			content:"";
-			border-radius: 5px;
 			background: $line_color;
 			position: absolute;
-			right: -20%;
 			transform: rotate(45deg);
 			width: 10px;
 			height: 430px;
+			border-radius: 10px;
+		}
+	}
+
+	@media (min-width: 500px) {
+		&__hrt,
+		&__hrm,
+		&__hrb {
+			width: 497px;
+			height: 15px;
+		}
+
+		&__vrl,
+		&__vrm,
+		&__vrr {
+			width: 15px;
+			height: 491px;
+		}
+
+		&__dgl {
+			left: 48%;
+		}
+		&__dgr {
+			left: 47%;
+		}
+		&__dgl,
+		&__dgr {
+			top: -112%;
+			width: 15px;
+			height: 620px;
+			background: transparent;
+
+			&::before {
+				width: 15px;
+				height: 620px;
+			}
 		}
 	}
 }
