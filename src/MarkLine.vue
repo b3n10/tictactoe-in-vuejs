@@ -20,97 +20,77 @@ export default {
 </script>
 
 <style lang="scss">
+$line_color: #ad6d00;
+
 .markline {
 	position: relative;
+	top: -112%;
+	left: 47%;
+	background: $line_color;
 
 	/* horizontal */
-	$horizontal_width: 345px;
-	$horizontal_width_lg: 494px;
-	$horizontal_height: 10px;
-	$horizontal_height_lg: 20px;
-
 	&__hrt {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 14.5%;
 		left: 0;
 		width: 345px;
 		height: 10px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	&__hrm {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 47.9%;
 		left: 0;
 		width: 345px;
 		height: 10px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	&__hrb {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 81.4%;
 		left: 0;
 		width: 345px;
 		height: 10px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	/* vertical */
-	$vertical_width: 10px;
-	$vertical_height: 345px;
-	$vertical_width_lg: 494px;
-	$vertical_height_lg: 20px;
-	$vertical_top: 0.4%;
-
 	&__vrl {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 0.4%;
 		left: 14.5%;
 		width: 10px;
 		height: 345px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	&__vrm {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 0.4%;
 		left: 47.5%;
 		width: 10px;
 		height: 345px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	&__vrr {
 		position: absolute;
-		background: #c19649;
-		border-radius: 5px;
-		overflow: hidden;
-
 		top: 0.4%;
 		left: 81.5%;
 		width: 10px;
 		height: 345px;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 
 	/* diagonal */
-	$vertical_height: 430px;
-
 	&__dgl {
 		width: 10px;
 		height: 430px;
@@ -118,14 +98,12 @@ export default {
 
 		&::before {
 			content:"";
-			position: absolute;
-			top: -393px;
-			left: 164px;
 			border-radius: 5px;
-			background: #c19649;
+			background: $line_color;
+			position: absolute;
+			transform: rotate(135deg);
 			width: 10px;
 			height: 430px;
-			transform: rotate(135deg);
 		}
 	}
 
@@ -134,16 +112,15 @@ export default {
 		height: 430px;
 		background: transparent;
 
-		&::before {
+		&::after {
 			content:"";
-			position: absolute;
-			top: -393px;
-			left: 167px;
 			border-radius: 5px;
-			background: #c19649;
+			background: $line_color;
+			position: absolute;
+			right: -20%;
+			transform: rotate(45deg);
 			width: 10px;
 			height: 430px;
-			transform: rotate(45deg);
 		}
 	}
 }
