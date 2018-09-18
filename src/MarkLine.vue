@@ -1,9 +1,12 @@
 <template>
 	<transition name="mark_slide">
-	<div v-show="mrk"
+		<div
+		v-if="mrk"
 		class="markline"
-		:class="this.block + '__' + this.mrkCls">
-	</div>
+		:class="this.block + '__' + this.mrkCls"
+		@click="$emit('resetFromMarkLine')"
+		 >
+		</div>
 	</transition>
 </template>
 
@@ -20,12 +23,13 @@ export default {
 </script>
 
 <style lang="scss">
-$line_color: #ad6d00;
+$line_color: #e59044;
 
 .markline {
 	position: relative;
 	background: $line_color;
 	border-radius: 10px;
+	cursor: pointer;
 
 	/* horizontal */
 	&__hrt {
@@ -154,7 +158,6 @@ $line_color: #ad6d00;
 .mark_slide-leave-active {
 	animation: .5s slidein;
 }
-
 @keyframes slidein {
 	from { transform: scaleX(0) scaleY(0); }
 	to { transform: scaleX(1) scaleY(1); }

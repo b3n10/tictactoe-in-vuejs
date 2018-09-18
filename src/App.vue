@@ -13,6 +13,7 @@
 				 :oppMk="opponentMark"
 				 @result="resultHandler"
 				 @reset="resetHandler"
+				 @resetNow="resetNowHandler"
 				 >
 		</Board>
 	</div>
@@ -56,6 +57,10 @@ export default {
 			}, 0)
 		},
 
+		resetNowHandler() {
+			this.startHandler(this.opponentFirst)
+		},
+
 		resetHandler() {
 			this.showButton = true
 		},
@@ -81,6 +86,11 @@ body, html {
 
 .app {
 	position: relative;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
 }
 
 </style>

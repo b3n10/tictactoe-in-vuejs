@@ -1,20 +1,23 @@
 <template>
-	<div class="main">
-		<div class="board">
-			<Box v-for="(box, index) in boxes"
-				:text="box.text"
-				:key="index"
-				:boxKey="index"
-				@userMove="userMoveHandler"
-				>
-			</Box>
-		</div>
+	<transition name="board_pop">
+		<div class="main">
+			<div class="board">
+				<Box v-for="(box, index) in boxes"
+					:text="box.text"
+					:key="index"
+					:boxKey="index"
+					@userMove="userMoveHandler"
+					>
+				</Box>
+			</div>
 
-		<MarkLine
-				:mrk="marked"
-				:mrkCls="markClass">
-		</MarkLine>
-	</div>
+			<MarkLine
+					:mrk="marked"
+					:mrkCls="markClass"
+					@resetFromMarkLine="resetNowHandler">
+			</MarkLine>
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -59,14 +62,19 @@ export default {
 				/* end debugging */
 			} else if (this.allFilled()) {
 				this.$emit('result', 'Draw')
-				this.marked = true
 			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
 
 		},
 
+		resetNowHandler() {
+			this.$emit('resetNow')
+		},
+
 		userMoveHandler(index) {
+			if (this.checkWin() || this.allFilled()) this.resetNowHandler()
+
 			if (!this.checkWin() && this.boxes[index].text === '') {
 				this.mark(index, this.usrMk)
 				this.opponentMove()
@@ -156,8 +164,7 @@ export default {
 	width: 350px;
 	height: 350px;
 	padding: 0;
-	margin: 100px auto 0 auto;
-	overflow: hidden;
+	margin: 0 auto;
 
 	@media (min-width: 500px) {
 		& {
@@ -170,7 +177,33 @@ export default {
 .board {
 	width: 100%;
 	height: 100%;
-	use-select: none;
+
+	/* prevent text selection */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-khtml-user-select: none;
 	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.board_pop-enter-active {
+	animation: bounce-in .5s;
+}
+.board_pop-leave-active {
+	opacity: 0;
+}
+@keyframes bounce-in {
+	0% {
+		transform: scale(0);
+	}
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		transform: scale(1);
+	}
 }
 </style>

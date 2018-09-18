@@ -122,22 +122,6 @@ export default {
 .fade-leave-active {
 	animation: bounce-in .5s;
 }
-
-/*
-.fade-enter-active .box__text-x1,
-.fade-enter-active .box__text-x2,
-.fade-leave-active .box__text-x1,
-.fade-leave-active .box__text-x2 {
-}
-
-.fade-enter .box__text-x1,
-.fade-enter .box__text-x2,
-.fade-leave-to .box__text-x1,
-.fade-leave-to .box__text-x2 {
-	width: 0px;
-}
-*/
-
 @keyframes bounce-in {
 	0% {
 		transform: scale(0);
