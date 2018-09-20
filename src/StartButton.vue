@@ -1,7 +1,11 @@
 <template>
 	<div class="btn">
-		<button class="btn__x" @click="$emit('start', false)">Play as X</button>
-		<button class="btn__o" @click="$emit('start', true)">Play as O</button>
+		<div class="btn__x" @click="$emit('start', false)">
+			X
+		</div>
+		<div class="btn__o" @click="$emit('start', true)">
+			O
+		</div>
 	</div>
 </template>
 
@@ -9,12 +13,27 @@
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:700');
+
 .btn {
 	margin: 0 auto;
-	width: 166px;
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 6%;
+	display: flex;
+	width: 300px;
+	justify-content: space-around;
+
+	&__x, &__o {
+		display: inline-block;
+		font-family: 'Ubuntu', sans-serif;
+		font-size: 3rem;
+		font-weight: 900;
+		line-height: 1.25;
+		background: #555;
+		color: #f1f1f1;
+		height: 60px;
+		width: 60px;
+		text-align: center;
+		border-radius: 5px;
+		cursor: pointer;
+	}
 }
 </style>

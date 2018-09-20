@@ -14,11 +14,7 @@ export default {
 
 <style lang="scss">
 .results {
-	margin: 0;
-	position: fixed;
-	left: 0;
-	right: 0;
-	top: 3%;
+	margin: 0 auto;
 
 	&__message {
 		text-align: center;

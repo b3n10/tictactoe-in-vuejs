@@ -1,11 +1,12 @@
 <template>
 	<div class="app">
+		<Results v-if="result"
+					 :rlt="result">
+		</Results>
+
 		<StartButton v-if="showButton"
 							 @start="startHandler">
 		</StartButton>
-
-		<Results :rlt="result">
-		</Results>
 
 		<Board v-if="play_game"
 				 :oppFt="opponentFirst"
@@ -88,7 +89,9 @@ body, html {
 	position: relative;
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	overflow: hidden;
 }
