@@ -36,7 +36,7 @@ $line_color: #e59044;
 		position: absolute;
 		top: 14.5%;
 		left: 0;
-		width: 345px;
+		width: 295px;
 		height: 10px;
 	}
 
@@ -44,7 +44,7 @@ $line_color: #e59044;
 		position: absolute;
 		top: 47.9%;
 		left: 0;
-		width: 345px;
+		width: 295px;
 		height: 10px;
 	}
 
@@ -52,7 +52,7 @@ $line_color: #e59044;
 		position: absolute;
 		top: 81.4%;
 		left: 0;
-		width: 345px;
+		width: 295px;
 		height: 10px;
 	}
 
@@ -62,7 +62,7 @@ $line_color: #e59044;
 		top: 0.4%;
 		left: 14.5%;
 		width: 10px;
-		height: 345px;
+		height: 295px;
 	}
 
 	&__vrm {
@@ -70,7 +70,7 @@ $line_color: #e59044;
 		top: 0.4%;
 		left: 47.5%;
 		width: 10px;
-		height: 345px;
+		height: 295px;
 	}
 
 	&__vrr {
@@ -78,15 +78,15 @@ $line_color: #e59044;
 		top: 0.4%;
 		left: 81.0%;
 		width: 10px;
-		height: 345px;
+		height: 295px;
 	}
 
 	/* diagonal */
 	&__dgl {
-		top: -111%;
-		left: 48%;
+		top: -113.6%;
+		left: 47%;
 		width: 10px;
-		height: 430px;
+		height: 380px;
 		background: transparent;
 
 		&::before {
@@ -95,16 +95,16 @@ $line_color: #e59044;
 			position: absolute;
 			transform: rotate(135deg);
 			width: 10px;
-			height: 430px;
+			height: 380px;
 			border-radius: 10px;
 		}
 	}
 
 	&__dgr {
-		top: -111%;
-		left: 46.8%;
+		top: -113.6%;
+		left: 47%;
 		width: 10px;
-		height: 430px;
+		height: 380px;
 		background: transparent;
 
 		&::before {
@@ -113,7 +113,7 @@ $line_color: #e59044;
 			position: absolute;
 			transform: rotate(45deg);
 			width: 10px;
-			height: 430px;
+			height: 380px;
 			border-radius: 10px;
 		}
 	}

@@ -161,8 +161,8 @@ export default {
 <style lang="scss">
 .main {
 	position: relative;
-	width: 350px;
-	height: 350px;
+	width: 300px;
+	height: 300px;
 	padding: 0;
 	margin: 0 auto;
 

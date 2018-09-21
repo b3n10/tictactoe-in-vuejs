@@ -32,7 +32,7 @@ export default {
 	margin: 50px auto;
 	display: flex;
 	height: 0;
-	width: 350px;
+	width: 300px;
 	justify-content: space-around;
 	align-items: center;
 
