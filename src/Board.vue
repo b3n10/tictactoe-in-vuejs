@@ -55,13 +55,13 @@ export default {
 			}
 
 			if (this.checkWin()) {
-				this.$emit('result', `Game Over! ${this.letterWin} wins!`)
+				this.$emit('result', `${this.letterWin} wins!`)
 				this.marked = true
 				/* start debugging */
 				console.log('Winner:', this.markClass, this.letterWin)
 				/* end debugging */
 			} else if (this.allFilled()) {
-				this.$emit('result', "It's a Draw!")
+				this.$emit('result', "Draw!")
 			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
@@ -177,18 +177,6 @@ export default {
 .board {
 	width: 100%;
 	height: 100%;
-
-	/* prevent text selection */
-	/*
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-tap-highlight-color: transparent;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	*/
 }
 
 .board_pop-enter-active {

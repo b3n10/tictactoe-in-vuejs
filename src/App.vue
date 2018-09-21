@@ -1,9 +1,11 @@
 <template>
 	<div class="app">
 		<StartButton :shwBtn="showButton"
-							 :rlt="result"
-							 @start="startHandler"
-							 @reset="resetNowHandler">
+			:rlt="result"
+			:play="play_game"
+			:frt_run="first_run"
+			@start="startHandler"
+			@resetNow="resetNowHandler">
 		</StartButton>
 
 		<Board v-if="play_game"
@@ -12,15 +14,13 @@
 				 :oppMk="opponentMark"
 				 @result="resultHandler"
 				 @reset="resetHandler"
-				 @resetNow="resetNowHandler"
-				 >
+				 @resetNow="resetNowHandler">
 		</Board>
 	</div>
 </template>
 
 <script>
 import StartButton from './StartButton.vue'
-// import Results from './Results.vue'
 import Board from './Board.vue'
 
 document.title = 'tic tac toe'
@@ -34,8 +34,9 @@ export default {
 			opponentFirst: null,
 			userMark: '',
 			opponentMark: '',
-			showButton: 1,
-			result: null
+			showButton: !!true,
+			result: null,
+			first_run: true
 		}
 	},
 
@@ -46,13 +47,14 @@ export default {
 			this.opponentFirst = bool
 			this.play_game = false
 			this.result = null
+			this.first_run = false
 			document.title = 'tic tac toe'
 
 			setTimeout(() => {
 				this.play_game = true
 				this.userMark = (this.opponentFirst) ? 'O' : 'X'
 				this.opponentMark = (this.opponentFirst) ? 'X' : 'O'
-				this.showButton = 0
+				this.showButton = false
 			}, 0)
 		},
 
@@ -61,7 +63,7 @@ export default {
 		},
 
 		resetHandler() {
-			this.showButton = 1
+			this.showButton = true
 		},
 
 		resultHandler(r) {
@@ -89,7 +91,6 @@ body, html {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	justify-content: space-around;
 	align-items: center;
 	overflow: hidden;
 }
