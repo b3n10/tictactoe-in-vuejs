@@ -61,7 +61,7 @@ export default {
 				console.log('Winner:', this.markClass, this.letterWin)
 				/* end debugging */
 			} else if (this.allFilled()) {
-				this.$emit('result', 'Draw')
+				this.$emit('result', "It's a Draw!")
 			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')
@@ -179,6 +179,7 @@ export default {
 	height: 100%;
 
 	/* prevent text selection */
+	/*
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -187,6 +188,7 @@ export default {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	*/
 }
 
 .board_pop-enter-active {

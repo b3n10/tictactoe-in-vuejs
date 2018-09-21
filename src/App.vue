@@ -1,11 +1,9 @@
 <template>
 	<div class="app">
-		<Results v-if="result"
-					 :rlt="result">
-		</Results>
-
-		<StartButton v-if="showButton"
-							 @start="startHandler">
+		<StartButton :shwBtn="showButton"
+							 :rlt="result"
+							 @start="startHandler"
+							 @reset="resetNowHandler">
 		</StartButton>
 
 		<Board v-if="play_game"
@@ -22,7 +20,7 @@
 
 <script>
 import StartButton from './StartButton.vue'
-import Results from './Results.vue'
+// import Results from './Results.vue'
 import Board from './Board.vue'
 
 document.title = 'tic tac toe'
@@ -36,25 +34,25 @@ export default {
 			opponentFirst: null,
 			userMark: '',
 			opponentMark: '',
-			showButton: true,
+			showButton: 1,
 			result: null
 		}
 	},
 
-	components: { StartButton, Results, Board },
+	components: { StartButton, Board },
 
 	methods: {
 		startHandler(bool) {
 			this.opponentFirst = bool
 			this.play_game = false
-			this.result = ''
+			this.result = null
 			document.title = 'tic tac toe'
 
 			setTimeout(() => {
 				this.play_game = true
 				this.userMark = (this.opponentFirst) ? 'O' : 'X'
 				this.opponentMark = (this.opponentFirst) ? 'X' : 'O'
-				this.showButton = false
+				this.showButton = 0
 			}, 0)
 		},
 
@@ -63,7 +61,7 @@ export default {
 		},
 
 		resetHandler() {
-			this.showButton = true
+			this.showButton = 1
 		},
 
 		resultHandler(r) {
