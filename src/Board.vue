@@ -61,7 +61,7 @@ export default {
 				console.log('Winner:', this.markClass, this.letterWin)
 				/* end debugging */
 			} else if (this.allFilled()) {
-				this.$emit('result', "Draw!")
+				this.$emit('result', "D R A W !")
 			}
 
 			if (this.checkWin() || this.allFilled()) this.$emit('reset')

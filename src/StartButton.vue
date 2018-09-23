@@ -1,8 +1,10 @@
 <template>
 	<div class="btn">
-		<div v-if="shwBtn" class="btn__x" @click="$emit('start', false)">
-			X
-		</div>
+		<transition name="letter_pop">
+			<div v-if="shwBtn" class="btn__x" @click="$emit('start', false)">
+				X
+			</div>
+		</transition>
 		<div v-if="frt_run" class="btn__vs">
 			vs
 		</div>
@@ -10,11 +12,13 @@
 			{{ rlt }}
 		</div>
 		<div v-if="play && !rlt" class="btn__restart" @click="$emit('resetNow')">
-			R E S T A R T
+			R E S E T
 		</div>
-		<div v-if="shwBtn" class="btn__o" @click="$emit('start', true)">
-			O
-		</div>
+		<transition name="letter_pop">
+			<div v-if="shwBtn" class="btn__o" @click="$emit('start', true)">
+				O
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -88,6 +92,24 @@ export default {
 		background: rgb(235, 84, 64);
 		border: 1px groove #fff;
 		color: #f1f1f1;
+	}
+}
+
+.letter_pop-enter-active {
+	animation: bounce-in .5s;
+}
+.letter_pop-leave-active {
+	opacity: 0;
+}
+@keyframes bounce-in {
+	0% {
+		transform: scale(0);
+	}
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		transform: scale(1);
 	}
 }
 </style>
